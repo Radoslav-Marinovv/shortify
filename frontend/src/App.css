@@ -17,3 +17,7 @@
   min-width: 50vw;
   min-height: 80vh;
 }
+
+.error-container {
+  border-color: rgba(226, 71, 71, 0.85);
+}
