@@ -1,19 +1,20 @@
-import { useNavigate } from "react-router";
+import GoBackButton from "../../Components/Buttons/GoBackButton/GoBackButton";
+import BackToHomeButton from "../../Components/Buttons/BackToHomeButton/BackToHomeButton";
+
 import './ErrorNotFound.css';
+
 const ErrorNotFound = () => {
 
-  const navigate = useNavigate();
-
   return (
-    <>
+    <div className="container error-container">
       <h1>Error 404!</h1>
       <p>Page not found</p>
       <p>Try again later</p>
       <div className="error-div-buttons">
-        <button onClick={() => navigate('/')}>Go to Shortify homepage</button>
-        <button onClick={() => navigate(-1)}>Go back</button>
+        <BackToHomeButton />
+        <GoBackButton />
       </div>
-    </>
+    </div>
   )
 }
 
