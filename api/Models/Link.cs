@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using api.Utils.Constants;
+﻿using api.Utils.Constants;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace api.Models
 {
     public class Link
@@ -12,7 +15,16 @@ namespace api.Models
         public string SecretURL { get; set; }
         public DateTime Created { get; set; }
         public int TimesOpened { get; set; }
-        public Dictionary<string,int> VisitorsIp { get; set; }
+        [JsonIgnore]
+        public string VisitorsIpJson
+        {
+            get => JsonSerializer.Serialize(VisitorsIp);
+            set => VisitorsIp = string.IsNullOrEmpty(value)
+                ? new Dictionary<string, int>()
+                : JsonSerializer.Deserialize<Dictionary<string, int>>(value);
+        }
+        [NotMapped]
+        public Dictionary<string, int> VisitorsIp { get; set; }
 
         public Link()
         {
