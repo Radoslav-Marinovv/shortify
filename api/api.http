@@ -1,6 +1,15 @@
 @api_HostAddress = http://localhost:5001
 
-GET {{api_HostAddress}}/weatherforecast/
+GET {{api_HostAddress}}/api/links/
+Accept: application/json
+
+###
+
+GET {{api_HostAddress}}/api/links/f128ee7e-8e34-4e80-8d8f-3dc1a7794af8
+Accept: application/json
+
+###
+GET {{api_HostAddress}}/api/links/c7c8cce9-b54b-4995-b990-50dddfa27bff
 Accept: application/json
 
 ###
