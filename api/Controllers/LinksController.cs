@@ -109,10 +109,9 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLink([FromBody] Link link)
+        public async Task<IActionResult> CreateLink([FromBody] string URL)
         {
-            var newURL = link.OriginalURL;
-            var isValid = ValidateLink(newURL);
+            var isValid = ValidateLink(URL);
             if (isValid != null)
             {
                 return isValid;
@@ -125,10 +124,11 @@ namespace api.Controllers
                 Link newLink = new Link
                 {
                     Id = Guid.NewGuid().ToString(),
-                    OriginalURL = newURL,
+                    OriginalURL = URL,
                     SecretURL = Guid.NewGuid().ToString(),
-                    VisitorsIp = {}
+                    VisitorsIp = new Dictionary<string, int>(),
                 };
+                newLink.VisitorsIp.Clear();
 
                 _context.Links.Add(newLink);
                 await _context.SaveChangesAsync();
