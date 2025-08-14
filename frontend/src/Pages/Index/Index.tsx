@@ -9,6 +9,13 @@ import GoToSecretUrlAnchor from "../../Components/Buttons/GoToSecretUrlAnchor/Go
 
 const Index = () => {
   const [createdLinks, setCreatedLinks] = useState<CreateLinkResponse[]>([]);
+
+  const handleDeleteStorageItem = (index: number) => {
+    const updatedLinks = createdLinks.filter((_, i) => i !== index);
+    setCreatedLinks(updatedLinks);
+    localStorage.setItem('myLinks', JSON.stringify(updatedLinks));
+  };
+
   useLayoutEffect(() => {
     const links = JSON.parse(localStorage.getItem('myLinks') || '[]') as CreateLinkResponse[];
     if (links) {
@@ -28,6 +35,7 @@ const Index = () => {
                   <h2>Original URL: <a href={`${link?.originalURL}`} target="_blank" className="pointer">{link?.originalURL}</a></h2>
                   <p>Short URL: <GoToShortUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${link?.shortURL}`} location={`${link?.shortURL}`} /></p>
                   <p>Secret URL: <GoToSecretUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${link?.secretURL}`} location={`${link?.secretURL}`} /></p>
+                  <button onClick={() => handleDeleteStorageItem(index)}>Delete</button>
                 </div>
               </Suspense>
             ))}
