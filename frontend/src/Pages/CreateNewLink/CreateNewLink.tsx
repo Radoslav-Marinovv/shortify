@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 
 import BackToHome from "../../Components/Buttons/BackToHomeButton/BackToHomeButton";
 import GoToShortUrlAnchor from "../../Components/Buttons/GoToShortUrlAnchor/GoToShortUrlAnchor";
@@ -10,6 +10,7 @@ import GoToSecretUrlAnchor from "../../Components/Buttons/GoToSecretUrlAnchor/Go
 
 const CreateNewLink = () => {
 
+  const prevLinks = useRef(JSON.parse(localStorage.getItem('myLinks') || '[]') as CreateLinkResponse[]);
   const [baseUrl, setBaseUrl] = useState('');
   const [createdLink, setCreatedLink] = useState<CreateLinkResponse | null>(null);
 
@@ -59,19 +60,20 @@ const CreateNewLink = () => {
               </div>
             </form>
           </>)}
-        {createdLink && (
-          <Suspense fallback={<div className="create-new-link">Loading...</div>}>
-            <div>
-              <h1>Link Created Successfully!</h1>
-              <h2>Original URL: {createdLink?.originalURL}</h2>
-              <p>Short URL: <GoToShortUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${createdLink?.shortURL}`} location={`${createdLink?.shortURL}`} /></p>
-              <p>Secret URL: <GoToSecretUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${createdLink?.secretURL}`} location={`${createdLink?.secretURL}`} /></p>
-            </div>
-            <div className="create-new-link-btn-group">
-              <BackToHome />
-            </div>
-          </Suspense>
-        )}
+        {createdLink && (localStorage.setItem('myLinks', JSON.stringify([createdLink, ...prevLinks.current])),
+          (
+            <Suspense fallback={<div className="create-new-link">Loading...</div>}>
+              <div>
+                <h1>Link Created Successfully!</h1>
+                <h2>Original URL: <a href={`${createdLink?.originalURL}`} target="_blank" className="pointer">{createdLink?.originalURL}</a></h2>
+                <p>Short URL: <GoToShortUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${createdLink?.shortURL}`} location={`${createdLink?.shortURL}`} /></p>
+                <p>Secret URL: <GoToSecretUrlAnchor displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${createdLink?.secretURL}`} location={`${createdLink?.secretURL}`} /></p>
+              </div>
+              <div className="create-new-link-btn-group">
+                <BackToHome />
+              </div>
+            </Suspense>
+          ))}
       </div>
     </>
   );
