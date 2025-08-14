@@ -106,6 +106,32 @@ namespace api.Controllers
             }
         }
 
+        [HttpPost("Secret")]
+        public async Task<IActionResult> GetSecretLinkById([FromBody] string id)
+        {
+            var isValid = ValidateLinkId(id);
+            if (isValid != null)
+            {
+                return isValid;
+            }
+
+            try
+            {
+                var link = await _context.Links.FirstOrDefaultAsync<Link>(link => link.SecretURL == id);
+
+                if (link == null)
+                {
+                    return NotFound("Short URL not found");
+                }
+                
+                return Ok(new { originalURL = link.OriginalURL, shortURL = link.Id, visitorsIp = link.VisitorsIp });
+            }
+            catch (Exception exception)
+            {
+                return BadRequest($"Error retrieving short URL: {exception.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateLink([FromBody] string URL)
         {
