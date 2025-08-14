@@ -38,9 +38,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowMyLocalhostReactApp");
 
 app.UseForwardedHeaders();
+
+app.UseCors("AllowMyLocalhostReactApp");
 
 app.UseHttpsRedirection();
 
