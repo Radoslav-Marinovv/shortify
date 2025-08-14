@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import { getSecretUrl, type GetSecretUrl } from "../../utils/services/link.service";
 
 import BackToHomeButton from "../../Components/Buttons/BackToHomeButton/BackToHomeButton";
+import GoToShortUrlAnchor from "../../Components/Buttons/GoToShortUrlAnchor/GoToShortUrlAnchor";
+import { SERVER_URL_LOCALHOST_NOT_REAL } from "../../constants/constants";
 
 const Secret = () => {
   const navigate = useNavigate();
@@ -54,13 +56,13 @@ const Secret = () => {
       <Suspense fallback={<div className="container">Loading...</div>}>
         <div>
           <h2>Original URL:</h2>
-          <p>{data.originalURL}</p>
+          <p><GoToShortUrlAnchor location={data.originalURL} displayName={data.originalURL} /></p>
           <h2>Short URL:</h2>
-          <p>{data.shortURL}</p>
+          <p><GoToShortUrlAnchor location={data.shortURL} displayName={`${SERVER_URL_LOCALHOST_NOT_REAL}/${data.shortURL}`} /></p>
           <h2>Visitors IP:</h2>
           <ul>
             {Object.entries(data.visitorsIp).map(([ip, count]) => (
-              <li key={ip}>
+              <li style={{ listStyleType: '-moz-initial' }} key={ip}>
                 {ip}: {count}
               </li>
             ))}
