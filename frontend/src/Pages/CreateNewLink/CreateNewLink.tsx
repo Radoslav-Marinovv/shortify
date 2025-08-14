@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import BackToHome from "../../Components/Buttons/BackToHomeButton/BackToHomeButton";
 
-import { getWeatherForecast } from "../../utils/services/link.service";
+import { postCreateLink } from "../../utils/services/link.service";
 import { MIN_URL_LENGTH } from "../../constants/constants";
 import './CreateNewLink.css';
 
@@ -18,9 +18,12 @@ const CreateNewLink = () => {
       return;
     }
 
-    const weatherData = await getWeatherForecast();
-    console.log(weatherData);
+    const response = await postCreateLink(baseUrl);
 
+    if (!response) {
+      alert(`Failed to create link. Please try again.`);
+      return;
+    }
     setBaseUrl('');
   };
 
