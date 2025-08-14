@@ -21,3 +21,7 @@
 .error-container {
   border-color: rgba(226, 71, 71, 0.85);
 }
+
+.pointer {
+  cursor: pointer;
+}

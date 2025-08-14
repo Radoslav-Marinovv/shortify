@@ -17,7 +17,7 @@ const GoToShortUrlAnchor = ({ location, displayName }: AnchorProps) => {
   }
 
   return (
-    <a onClick={() => handleCreatedLink(location)}>{displayName}</a>
+    <a className="pointer" onClick={() => handleCreatedLink(location)}>{displayName}</a>
   )
 }
 
