@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 
 import Index from './Pages/Index/Index'
+import Secret from './Pages/Secret/Secret'
 import ErrorNotFound from './Pages/Error/ErrorNotFound'
 import CreateNewLink from './Pages/CreateNewLink/CreateNewLink'
 
@@ -17,6 +18,11 @@ function App() {
     {
       path: '/create-new-link',
       element: <CreateNewLink />,
+      errorElement: <ErrorNotFound />
+    },
+    {
+      path: '/secret/:secretURL',
+      element: <Secret />,
       errorElement: <ErrorNotFound />
     }
   ])
