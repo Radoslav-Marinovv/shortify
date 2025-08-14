@@ -130,7 +130,7 @@ namespace api.Controllers
 
                 _context.Links.Add(newLink);
                 await _context.SaveChangesAsync();
-                return Ok(newLink);
+                return Ok(new { originalURL = newLink.OriginalURL, shortURL = newLink.Id, secretURL = newLink.SecretURL });
             }
             catch (Exception exeption)
             {
