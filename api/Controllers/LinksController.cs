@@ -35,21 +35,11 @@ namespace api.Controllers
             }
             return null;
         }
-        private BadRequestObjectResult? ValidateLinkId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return BadRequest("Id is Null or Empty");
-            }
-
-            return null;
-        }
-
         private string GetClientIp()
         {
             var ipAddress = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
-            if (string.IsNullOrEmpty(ipAddress))
+            if (String.IsNullOrEmpty(ipAddress))
             {
                 ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
             }
@@ -67,10 +57,9 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShortLinkById([FromRoute] string id)
         {
-            var isValid = ValidateLinkId(id);
-            if (isValid != null)
+            if (String.IsNullOrEmpty(id))
             {
-                return isValid;
+                return BadRequest("Id is Null or Empty");
             }
 
             try
@@ -106,13 +95,12 @@ namespace api.Controllers
             }
         }
 
-        [HttpPost("Secret")]
-        public async Task<IActionResult> GetSecretLinkById([FromBody] string id)
+        [HttpGet("Secret/{id}")]
+        public async Task<IActionResult> GetSecretLinkById(string id)
         {
-            var isValid = ValidateLinkId(id);
-            if (isValid != null)
+            if (String.IsNullOrEmpty(id))
             {
-                return isValid;
+                return BadRequest("Id is Null or Empty");
             }
 
             try
