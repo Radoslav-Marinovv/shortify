@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using api.Database;
 using api.Models;
 using api.Utils.Constants;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
@@ -100,7 +98,7 @@ namespace api.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return Ok(new{ ShortLink = link.OriginalURL});
+                return Ok(new { originalUrl = link.OriginalURL });
             }
             catch (Exception exception)
             {
