@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { LOCAL_URL } from "../../../constants/constants";
 
 type AnchorProps = {
   location: string;
@@ -7,15 +7,13 @@ type AnchorProps = {
 
 const GoToSecretUrlAnchor = ({ location, displayName }: AnchorProps) => {
 
-  const navigate = useNavigate();
 
-  const handleCreatedLink = async (location: string) => {
+  const handleCreatedLink = (location: string) => {
     if (!location) {
       alert('No link created yet.');
       return;
     }
-
-    navigate(`/secret/${location}`, { replace: true });
+    window.open(`${LOCAL_URL}/secret/${location}`, "_blank");
   }
 
   return (
